@@ -1,0 +1,721 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yumi Manager | Studio Yumi</title>
+
+<style>
+:root {
+  --primary: #8b6bb1;
+  --dark: #45345e;
+  --light: #e9ddf7;
+  --bg: #f7f5fa;
+  --white: #ffffff;
+  --text: #292333;
+  --muted: #81798c;
+  --border: #eee9f3;
+  --red: #d95368;
+  --green: #299b76;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+button, input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 245px;
+  background: var(--dark);
+  color: white;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.brand {
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.brand span {
+  display: block;
+  font-size: 11px;
+  color: #d5c5e9;
+  margin-top: 6px;
+  font-weight: normal;
+}
+
+.nav-title {
+  font-size: 10px;
+  color: #c6b6d9;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+
+.nav-item {
+  padding: 13px;
+  border-radius: 9px;
+  color: #eee5f7;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.nav-item.active,
+.nav-item:hover {
+  background: #71568f;
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  color: #cfc1df;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+main {
+  flex: 1;
+  min-width: 0;
+  padding: 35px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 35px;
+}
+
+.topbar h1 {
+  font-size: 25px;
+}
+
+.topbar p {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 7px;
+}
+
+.user {
+  background: var(--light);
+  color: var(--dark);
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.demo {
+  background: #f0e9f8;
+  color: var(--dark);
+  padding: 13px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  margin-bottom: 25px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.stat {
+  background: white;
+  padding: 23px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.stat-value {
+  font-size: 29px;
+  font-weight: bold;
+  color: var(--dark);
+  margin-top: 13px;
+}
+
+.stat-note {
+  font-size: 11px;
+  color: var(--green);
+  margin-top: 8px;
+}
+
+.panel {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 23px;
+  margin-bottom: 25px;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.panel-header h2 {
+  font-size: 17px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 11px 15px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-secondary {
+  background: var(--light);
+  color: var(--dark);
+}
+
+.btn-danger {
+  background: #fff0f2;
+  color: var(--red);
+}
+
+.search {
+  width: 100%;
+  border: 1px solid var(--border);
+  padding: 13px;
+  border-radius: 8px;
+  outline: none;
+  margin-bottom: 18px;
+  font-size: 13px;
+}
+
+.search:focus,
+input:focus {
+  border-color: var(--primary);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 620px;
+}
+
+th {
+  text-align: left;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: normal;
+  padding: 13px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+td {
+  padding: 16px 10px;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.status {
+  background: #e5f6ef;
+  color: var(--green);
+  padding: 6px 9px;
+  border-radius: 20px;
+  font-size: 10px;
+}
+
+.row-actions {
+  display: flex;
+  gap: 7px;
+}
+
+.row-actions button {
+  border: none;
+  padding: 7px;
+  border-radius: 6px;
+  background: var(--light);
+  color: var(--dark);
+  font-size: 11px;
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 35px;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 11px;
+  padding: 15px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #21172c99;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  z-index: 10;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  width: 100%;
+  max-width: 430px;
+  padding: 28px;
+  border-radius: 16px;
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  font-size: 19px;
+}
+
+.field {
+  margin-bottom: 15px;
+}
+
+.field label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 7px;
+  color: var(--muted);
+}
+
+.field input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-buttons button {
+  flex: 1;
+}
+
+@media(max-width: 850px) {
+  .sidebar {
+    width: 190px;
+  }
+  main {
+    padding: 23px;
+  }
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media(max-width: 600px) {
+  .layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    padding: 18px;
+    gap: 18px;
+  }
+  .sidebar-bottom {
+    display: none;
+  }
+  .nav-item {
+    display: inline-block;
+    margin: 0 5px 0 0;
+    padding: 9px;
+  }
+  main {
+    padding: 18px;
+  }
+  .topbar {
+    align-items: flex-start;
+  }
+  .topbar h1 {
+    font-size: 21px;
+  }
+  .user {
+    display: none;
+  }
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .stat {
+    padding: 18px;
+  }
+  .panel {
+    padding: 16px;
+  }
+  .panel-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      SY. STUDIO YUMI
+      <span>MANAGEMENT SYSTEM</span>
+    </div>
+
+    <div>
+      <div class="nav-title">MENU PRINCIPAL</div>
+      <div class="nav-item active">▦ Visão geral</div>
+      <div class="nav-item">♙ Clientes</div>
+      <div class="nav-item">⚙ Configurações</div>
+    </div>
+
+    <div class="sidebar-bottom">
+      STUDIO YUMI<br>
+      Design Digital & Tecnologia<br>
+      Projeto demonstrativo
+    </div>
+  </aside>
+
+  <main>
+
+    <header class="topbar">
+      <div>
+        <h1>Visão geral</h1>
+        <p>Gerencie os cadastros da sua empresa.</p>
+      </div>
+      <div class="user">ADMINISTRADOR</div>
+    </header>
+
+    <div class="demo">
+      ✦ Ambiente demonstrativo — os dados são armazenados neste navegador e não representam clientes reais.
+    </div>
+
+    <section class="stats">
+
+      <div class="stat">
+        <div class="stat-label">Total de clientes</div>
+        <div class="stat-value" id="total">0</div>
+        <div class="stat-note">Cadastros registrados</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Clientes ativos</div>
+        <div class="stat-value" id="ativos">0</div>
+        <div class="stat-note">Status ativo</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Novos cadastros</div>
+        <div class="stat-value" id="novos">0</div>
+        <div class="stat-note">Nesta demonstração</div>
+      </div>
+
+    </section>
+
+    <section class="panel">
+
+      <div class="panel-header">
+        <h2>Gerenciamento de clientes</h2>
+
+        <div class="actions">
+          <button class="btn btn-secondary" onclick="exportarCSV()">
+            Exportar CSV
+          </button>
+          <button class="btn btn-primary" onclick="abrirModal()">
+            + Novo cliente
+          </button>
+        </div>
+      </div>
+
+      <input
+        class="search"
+        id="pesquisa"
+        type="search"
+        placeholder="Pesquisar por nome ou e-mail..."
+        oninput="renderizar()"
+      >
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>NOME</th>
+              <th>E-MAIL</th>
+              <th>TELEFONE</th>
+              <th>STATUS</th>
+              <th>AÇÕES</th>
+            </tr>
+          </thead>
+          <tbody id="lista"></tbody>
+        </table>
+      </div>
+
+    </section>
+
+    <footer>
+      © 2026 Studio Yumi — Sistema demonstrativo de gerenciamento.
+    </footer>
+
+  </main>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+
+    <h2 id="tituloModal">Novo cliente</h2>
+
+    <form id="formulario">
+
+      <div class="field">
+        <label for="nome">Nome completo</label>
+        <input id="nome" required placeholder="Digite o nome">
+      </div>
+
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input id="email" type="email" required placeholder="email@exemplo.com">
+      </div>
+
+      <div class="field">
+        <label for="telefone">Telefone</label>
+        <input id="telefone" placeholder="(00) 00000-0000">
+      </div>
+
+      <div class="modal-buttons">
+        <button type="button" class="btn btn-secondary" onclick="fecharModal()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary">
+          Salvar cliente
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+let clientes = JSON.parse(
+  localStorage.getItem("yumiClientes")
+) || [];
+
+let editando = null;
+
+function salvarDados() {
+  localStorage.setItem("yumiClientes", JSON.stringify(clientes));
+}
+
+function renderizar() {
+  const termo = document.getElementById("pesquisa").value.toLowerCase();
+
+  const filtrados = clientes.filter(cliente =>
+    cliente.nome.toLowerCase().includes(termo) ||
+    cliente.email.toLowerCase().includes(termo)
+  );
+
+  document.getElementById("total").textContent = clientes.length;
+  document.getElementById("ativos").textContent = clientes.length;
+  document.getElementById("novos").textContent = clientes.length;
+
+  const lista = document.getElementById("lista");
+
+  if (filtrados.length === 0) {
+    lista.innerHTML = `
+      <tr>
+        <td colspan="5" class="empty">
+          Nenhum cliente encontrado.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  lista.innerHTML = filtrados.map(cliente => `
+    <tr>
+      <td><strong>${escapar(cliente.nome)}</strong></td>
+      <td>${escapar(cliente.email)}</td>
+      <td>${escapar(cliente.telefone || "—")}</td>
+      <td><span class="status">Ativo</span></td>
+      <td>
+        <div class="row-actions">
+          <button onclick="editarCliente('${cliente.id}')">Editar</button>
+          <button onclick="excluirCliente('${cliente.id}')">Excluir</button>
+        </div>
+      </td>
+    </tr>
+  `).join("");
+}
+
+function escapar(valor) {
+  return String(valor).replace(/[&<>"']/g, caractere => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[caractere]);
+}
+
+function abrirModal() {
+  editando = null;
+  document.getElementById("tituloModal").textContent = "Novo cliente";
+  document.getElementById("formulario").reset();
+  document.getElementById("modal").classList.add("show");
+}
+
+function fecharModal() {
+  document.getElementById("modal").classList.remove("show");
+}
+
+document.getElementById("formulario").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const nome = document.getElementById("nome").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const telefone = document.getElementById("telefone").value.trim();
+
+  if (!nome || !email) return;
+
+  if (editando) {
+    const cliente = clientes.find(item => item.id === editando);
+    if (cliente) {
+      cliente.nome = nome;
+      cliente.email = email;
+      cliente.telefone = telefone;
+    }
+  } else {
+    clientes.push({
+      id: String(Date.now()) + Math.random().toString(16).slice(2),
+      nome,
+      email,
+      telefone
+    });
+  }
+
+  salvarDados();
+  renderizar();
+  fecharModal();
+});
+
+function editarCliente(id) {
+  const cliente = clientes.find(item => item.id === id);
+  if (!cliente) return;
+
+  editando = id;
+
+  document.getElementById("tituloModal").textContent = "Editar cliente";
+  document.getElementById("nome").value = cliente.nome;
+  document.getElementById("email").value = cliente.email;
+  document.getElementById("telefone").value = cliente.telefone;
+
+  document.getElementById("modal").classList.add("show");
+}
+
+function excluirCliente(id) {
+  const confirmar = confirm("Deseja realmente excluir este cliente?");
+  if (!confirmar) return;
+
+  clientes = clientes.filter(cliente => cliente.id !== id);
+
+  salvarDados();
+  renderizar();
+}
+
+function exportarCSV() {
+  if (clientes.length === 0) {
+    alert("Não existem clientes para exportar.");
+    return;
+  }
+
+  const linhas = [
+    ["Nome", "Email", "Telefone"],
+    ...clientes.map(cliente => [
+      cliente.nome,
+      cliente.email,
+      cliente.telefone
+    ])
+  ];
+
+  const csv = "\uFEFF" + linhas.map(linha =>
+    linha.map(valor =>
+      '"' + String(valor).replace(/"/g, '""') + '"'
+    ).join(";")
+  ).join("\n");
+
+  const arquivo = new Blob([csv], {
+    type: "text/csv;charset=utf-8;"
+  });
+
+  const url = URL.createObjectURL(arquivo);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "clientes-studio-yumi.csv";
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
+renderizar();
+</script>
+
+</body>
+</html>
