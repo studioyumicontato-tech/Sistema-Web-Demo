@@ -8,404 +8,220 @@
 
 <style>
 :root {
-  --primary: #8b6bb1;
-  --dark: #45345e;
-  --light: #e9ddf7;
-  --bg: #f7f5fa;
-  --white: #ffffff;
-  --text: #292333;
-  --muted: #81798c;
-  --border: #eee9f3;
-  --red: #d95368;
-  --green: #299b76;
+  --primary:#8b6bb1;
+  --dark:#45345e;
+  --light:#e9ddf7;
+  --bg:#f7f5fa;
+  --white:#fff;
+  --text:#292333;
+  --muted:#81798c;
+  --border:#eee9f3;
+  --green:#299b76;
+  --red:#d95368;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:var(--bg);color:var(--text)}
+button,input{font:inherit}
+button{cursor:pointer}
+
+.layout{display:flex;min-height:100vh}
+
+.sidebar{
+  width:245px;
+  background:var(--dark);
+  color:white;
+  padding:28px 20px;
+  display:flex;
+  flex-direction:column;
+  gap:35px;
 }
 
-body {
-  background: var(--bg);
-  color: var(--text);
+.brand{font-size:22px;font-weight:bold;letter-spacing:1px}
+.brand span{display:block;font-size:11px;color:#d5c5e9;margin-top:6px;font-weight:normal}
+.nav-title{font-size:10px;color:#c6b6d9;letter-spacing:2px;margin-bottom:14px}
+
+.nav-item{
+  display:block;
+  width:100%;
+  border:0;
+  background:transparent;
+  text-align:left;
+  padding:14px;
+  border-radius:9px;
+  color:#eee5f7;
+  font-size:14px;
+  margin-bottom:8px;
 }
 
-button, input {
-  font: inherit;
+.nav-item.active,.nav-item:hover{background:#71568f}
+.sidebar-bottom{margin-top:auto;color:#cfc1df;font-size:11px;line-height:1.7}
+
+main{flex:1;min-width:0;padding:35px}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:30px;
 }
 
-button {
-  cursor: pointer;
+.topbar h1{font-size:25px}
+.topbar p{color:var(--muted);font-size:13px;margin-top:7px}
+.user{background:var(--light);color:var(--dark);padding:12px 16px;border-radius:12px;font-size:12px;font-weight:bold}
+
+.demo{
+  background:#f0e9f8;
+  color:var(--dark);
+  padding:13px 16px;
+  border-radius:10px;
+  font-size:12px;
+  margin-bottom:25px;
 }
 
-.layout {
-  display: flex;
-  min-height: 100vh;
+.page{display:none}
+.page.active{display:block}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-bottom:25px;
 }
 
-.sidebar {
-  width: 245px;
-  background: var(--dark);
-  color: white;
-  padding: 28px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 35px;
+.stat,.panel{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:23px;
 }
 
-.brand {
-  font-size: 22px;
-  font-weight: bold;
-  letter-spacing: 1px;
+.stat-label{color:var(--muted);font-size:12px}
+.stat-value{font-size:29px;font-weight:bold;color:var(--dark);margin-top:13px}
+.stat-note{font-size:11px;color:var(--green);margin-top:8px}
+
+.panel{margin-bottom:25px}
+.panel-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  margin-bottom:22px;
+}
+.panel-header h2{font-size:17px}
+
+.btn{
+  border:0;
+  border-radius:8px;
+  padding:11px 15px;
+  font-size:12px;
+  font-weight:bold;
+}
+.btn-primary{background:var(--primary);color:white}
+.btn-secondary{background:var(--light);color:var(--dark)}
+.btn-danger{background:#fff0f2;color:var(--red)}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+
+.search,.field input{
+  width:100%;
+  border:1px solid var(--border);
+  padding:13px;
+  border-radius:8px;
+  outline:none;
+  font-size:13px;
+}
+.search{margin-bottom:18px}
+.search:focus,.field input:focus{border-color:var(--primary)}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:620px}
+th{
+  text-align:left;
+  color:var(--muted);
+  font-size:11px;
+  font-weight:normal;
+  padding:13px 10px;
+  border-bottom:1px solid var(--border);
+}
+td{padding:16px 10px;font-size:12px;border-bottom:1px solid var(--border)}
+.status{background:#e5f6ef;color:var(--green);padding:6px 9px;border-radius:20px;font-size:10px}
+.row-actions{display:flex;gap:7px}
+.row-actions button{border:0;padding:7px;border-radius:6px;background:var(--light);color:var(--dark);font-size:11px}
+.empty{text-align:center;color:var(--muted);padding:35px}
+
+.welcome{
+  background:linear-gradient(120deg,#45345e,#8b6bb1);
+  color:white;
+  padding:28px;
+  border-radius:15px;
+  margin-bottom:25px;
+}
+.welcome h2{font-size:21px;margin-bottom:9px}
+.welcome p{font-size:13px;color:#eee5f7;line-height:1.6}
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+.quick-card{
+  border:1px solid var(--border);
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  cursor:pointer;
+  text-align:left;
+}
+.quick-card strong{display:block;color:var(--dark);margin-bottom:8px}
+.quick-card span{font-size:12px;color:var(--muted)}
+
+.settings-grid{display:grid;gap:18px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;margin-bottom:7px;color:var(--muted)}
+.field input{margin-top:0}
+.settings-description{font-size:12px;color:var(--muted);line-height:1.6;margin:8px 0 18px}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#21172c99;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:10;
+}
+.modal.show{display:flex}
+.modal-content{background:white;width:100%;max-width:430px;padding:28px;border-radius:16px}
+.modal-content h2{margin-bottom:20px;font-size:19px}
+.modal-buttons{display:flex;gap:10px;margin-top:20px}
+.modal-buttons button{flex:1}
+
+footer{text-align:center;color:var(--muted);font-size:11px;padding:15px}
+
+@media(max-width:850px){
+  .sidebar{width:190px}
+  main{padding:23px}
+  .stats{grid-template-columns:1fr 1fr}
 }
 
-.brand span {
-  display: block;
-  font-size: 11px;
-  color: #d5c5e9;
-  margin-top: 6px;
-  font-weight: normal;
-}
-
-.nav-title {
-  font-size: 10px;
-  color: #c6b6d9;
-  letter-spacing: 2px;
-  margin-bottom: 14px;
-}
-
-.nav-item {
-  padding: 13px;
-  border-radius: 9px;
-  color: #eee5f7;
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-
-.nav-item.active,
-.nav-item:hover {
-  background: #71568f;
-}
-
-.sidebar-bottom {
-  margin-top: auto;
-  color: #cfc1df;
-  font-size: 11px;
-  line-height: 1.7;
-}
-
-main {
-  flex: 1;
-  min-width: 0;
-  padding: 35px;
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 35px;
-}
-
-.topbar h1 {
-  font-size: 25px;
-}
-
-.topbar p {
-  color: var(--muted);
-  font-size: 13px;
-  margin-top: 7px;
-}
-
-.user {
-  background: var(--light);
-  color: var(--dark);
-  padding: 12px 16px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.demo {
-  background: #f0e9f8;
-  color: var(--dark);
-  padding: 13px 16px;
-  border-radius: 10px;
-  font-size: 12px;
-  margin-bottom: 25px;
-}
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  margin-bottom: 28px;
-}
-
-.stat {
-  background: white;
-  padding: 23px;
-  border: 1px solid var(--border);
-  border-radius: 15px;
-}
-
-.stat-label {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.stat-value {
-  font-size: 29px;
-  font-weight: bold;
-  color: var(--dark);
-  margin-top: 13px;
-}
-
-.stat-note {
-  font-size: 11px;
-  color: var(--green);
-  margin-top: 8px;
-}
-
-.panel {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 15px;
-  padding: 23px;
-  margin-bottom: 25px;
-}
-
-.panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 22px;
-}
-
-.panel-header h2 {
-  font-size: 17px;
-}
-
-.actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.btn {
-  border: none;
-  border-radius: 8px;
-  padding: 11px 15px;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.btn-primary {
-  background: var(--primary);
-  color: white;
-}
-
-.btn-secondary {
-  background: var(--light);
-  color: var(--dark);
-}
-
-.btn-danger {
-  background: #fff0f2;
-  color: var(--red);
-}
-
-.search {
-  width: 100%;
-  border: 1px solid var(--border);
-  padding: 13px;
-  border-radius: 8px;
-  outline: none;
-  margin-bottom: 18px;
-  font-size: 13px;
-}
-
-.search:focus,
-input:focus {
-  border-color: var(--primary);
-}
-
-.table-wrap {
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 620px;
-}
-
-th {
-  text-align: left;
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: normal;
-  padding: 13px 10px;
-  border-bottom: 1px solid var(--border);
-}
-
-td {
-  padding: 16px 10px;
-  font-size: 12px;
-  border-bottom: 1px solid var(--border);
-}
-
-.status {
-  background: #e5f6ef;
-  color: var(--green);
-  padding: 6px 9px;
-  border-radius: 20px;
-  font-size: 10px;
-}
-
-.row-actions {
-  display: flex;
-  gap: 7px;
-}
-
-.row-actions button {
-  border: none;
-  padding: 7px;
-  border-radius: 6px;
-  background: var(--light);
-  color: var(--dark);
-  font-size: 11px;
-}
-
-.empty {
-  text-align: center;
-  color: var(--muted);
-  padding: 35px;
-}
-
-footer {
-  text-align: center;
-  color: var(--muted);
-  font-size: 11px;
-  padding: 15px;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: #21172c99;
-  align-items: center;
-  justify-content: center;
-  padding: 18px;
-  z-index: 10;
-}
-
-.modal.show {
-  display: flex;
-}
-
-.modal-content {
-  background: white;
-  width: 100%;
-  max-width: 430px;
-  padding: 28px;
-  border-radius: 16px;
-}
-
-.modal-content h2 {
-  margin-bottom: 20px;
-  font-size: 19px;
-}
-
-.field {
-  margin-bottom: 15px;
-}
-
-.field label {
-  display: block;
-  font-size: 12px;
-  margin-bottom: 7px;
-  color: var(--muted);
-}
-
-.field input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  outline: none;
-}
-
-.modal-buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.modal-buttons button {
-  flex: 1;
-}
-
-@media(max-width: 850px) {
-  .sidebar {
-    width: 190px;
-  }
-  main {
-    padding: 23px;
-  }
-  .stats {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media(max-width: 600px) {
-  .layout {
-    flex-direction: column;
-  }
-  .sidebar {
-    width: 100%;
-    padding: 18px;
-    gap: 18px;
-  }
-  .sidebar-bottom {
-    display: none;
-  }
-  .nav-item {
-    display: inline-block;
-    margin: 0 5px 0 0;
-    padding: 9px;
-  }
-  main {
-    padding: 18px;
-  }
-  .topbar {
-    align-items: flex-start;
-  }
-  .topbar h1 {
-    font-size: 21px;
-  }
-  .user {
-    display: none;
-  }
-  .stats {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  .stat {
-    padding: 18px;
-  }
-  .panel {
-    padding: 16px;
-  }
-  .panel-header {
-    align-items: flex-start;
-    flex-direction: column;
-  }
+@media(max-width:600px){
+  .layout{flex-direction:column}
+  .sidebar{width:100%;padding:18px;gap:18px}
+  .sidebar-bottom{display:none}
+  .nav-item{display:inline-block;width:auto;margin:0 3px 0 0;padding:10px}
+  .nav-title{margin-bottom:10px}
+  main{padding:18px}
+  .topbar{align-items:flex-start}
+  .topbar h1{font-size:21px}
+  .user{display:none}
+  .stats{grid-template-columns:1fr;gap:12px}
+  .stat{padding:18px}
+  .panel{padding:16px}
+  .panel-header{align-items:flex-start;flex-direction:column}
+  .quick-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -422,9 +238,18 @@ footer {
 
     <div>
       <div class="nav-title">MENU PRINCIPAL</div>
-      <div class="nav-item active">▦ Visão geral</div>
-      <div class="nav-item">♙ Clientes</div>
-      <div class="nav-item">⚙ Configurações</div>
+
+      <button class="nav-item active" data-page="dashboard" onclick="navegar('dashboard')">
+        ▦ Visão geral
+      </button>
+
+      <button class="nav-item" data-page="clientes" onclick="navegar('clientes')">
+        ♙ Clientes
+      </button>
+
+      <button class="nav-item" data-page="configuracoes" onclick="navegar('configuracoes')">
+        ⚙ Configurações
+      </button>
     </div>
 
     <div class="sidebar-bottom">
@@ -438,85 +263,169 @@ footer {
 
     <header class="topbar">
       <div>
-        <h1>Visão geral</h1>
-        <p>Gerencie os cadastros da sua empresa.</p>
+        <h1 id="tituloPagina">Visão geral</h1>
+        <p id="subtituloPagina">Acompanhe as informações da sua empresa.</p>
       </div>
       <div class="user">ADMINISTRADOR</div>
     </header>
 
     <div class="demo">
-      ✦ Ambiente demonstrativo — os dados são armazenados neste navegador e não representam clientes reais.
+      ✦ Ambiente demonstrativo — os dados ficam armazenados neste navegador e não representam clientes reais.
     </div>
 
-    <section class="stats">
+    <!-- PÁGINA INICIAL -->
+    <section class="page active" id="dashboard">
 
-      <div class="stat">
-        <div class="stat-label">Total de clientes</div>
-        <div class="stat-value" id="total">0</div>
-        <div class="stat-note">Cadastros registrados</div>
+      <div class="welcome">
+        <h2 id="boasVindas">Bem-vindo ao Yumi Manager</h2>
+        <p>Organize seus cadastros e acompanhe as informações da sua empresa em um só lugar.</p>
       </div>
 
-      <div class="stat">
-        <div class="stat-label">Clientes ativos</div>
-        <div class="stat-value" id="ativos">0</div>
-        <div class="stat-note">Status ativo</div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Total de clientes</div>
+          <div class="stat-value" id="totalDashboard">0</div>
+          <div class="stat-note">Cadastros registrados</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Clientes ativos</div>
+          <div class="stat-value" id="ativosDashboard">0</div>
+          <div class="stat-note">Todos os cadastros</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-label">Novos cadastros</div>
+          <div class="stat-value" id="novosDashboard">0</div>
+          <div class="stat-note">Total registrado</div>
+        </div>
       </div>
 
-      <div class="stat">
-        <div class="stat-label">Novos cadastros</div>
-        <div class="stat-value" id="novos">0</div>
-        <div class="stat-note">Nesta demonstração</div>
-      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Acesso rápido</h2>
+        </div>
 
-    </section>
-
-    <section class="panel">
-
-      <div class="panel-header">
-        <h2>Gerenciamento de clientes</h2>
-
-        <div class="actions">
-          <button class="btn btn-secondary" onclick="exportarCSV()">
-            Exportar CSV
+        <div class="quick-grid">
+          <button class="quick-card" onclick="navegar('clientes')">
+            <strong>♙ Gerenciar clientes</strong>
+            <span>Visualizar, cadastrar, editar e excluir clientes.</span>
           </button>
-          <button class="btn btn-primary" onclick="abrirModal()">
-            + Novo cliente
+
+          <button class="quick-card" onclick="navegar('configuracoes')">
+            <strong>⚙ Configurações</strong>
+            <span>Personalizar as informações da empresa.</span>
           </button>
         </div>
       </div>
 
-      <input
-        class="search"
-        id="pesquisa"
-        type="search"
-        placeholder="Pesquisar por nome ou e-mail..."
-        oninput="renderizar()"
-      >
+    </section>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>NOME</th>
-              <th>E-MAIL</th>
-              <th>TELEFONE</th>
-              <th>STATUS</th>
-              <th>AÇÕES</th>
-            </tr>
-          </thead>
-          <tbody id="lista"></tbody>
-        </table>
+    <!-- PÁGINA DE CLIENTES -->
+    <section class="page" id="clientes">
+
+      <div class="panel">
+
+        <div class="panel-header">
+          <h2>Gerenciamento de clientes</h2>
+
+          <div class="actions">
+            <button class="btn btn-secondary" onclick="exportarCSV()">
+              Exportar CSV
+            </button>
+
+            <button class="btn btn-primary" onclick="abrirModal()">
+              + Novo cliente
+            </button>
+          </div>
+        </div>
+
+        <input
+          class="search"
+          id="pesquisa"
+          type="search"
+          placeholder="Pesquisar por nome ou e-mail..."
+          oninput="renderizarClientes()"
+        >
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>NOME</th>
+                <th>E-MAIL</th>
+                <th>TELEFONE</th>
+                <th>STATUS</th>
+                <th>AÇÕES</th>
+              </tr>
+            </thead>
+            <tbody id="lista"></tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- PÁGINA DE CONFIGURAÇÕES -->
+    <section class="page" id="configuracoes">
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Informações da empresa</h2>
+        </div>
+
+        <p class="settings-description">
+          Personalize as informações exibidas no painel demonstrativo.
+        </p>
+
+        <div class="field">
+          <label for="empresa">Nome da empresa</label>
+          <input id="empresa" maxlength="60" placeholder="Nome da empresa">
+        </div>
+
+        <div class="field">
+          <label for="descricaoEmpresa">Descrição</label>
+          <input id="descricaoEmpresa" maxlength="100" placeholder="Descrição da empresa">
+        </div>
+
+        <button class="btn btn-primary" onclick="salvarConfiguracoes()">
+          Salvar configurações
+        </button>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Gerenciamento de dados</h2>
+        </div>
+
+        <p class="settings-description">
+          Os dados deste projeto são armazenados localmente no navegador. Limpar os dados remove os clientes cadastrados e restaura as configurações iniciais.
+        </p>
+
+        <button class="btn btn-danger" onclick="limparDados()">
+          Limpar todos os dados
+        </button>
+      </div>
+
+      <div class="panel">
+        <h2 style="font-size:16px;margin-bottom:12px">Sobre o sistema</h2>
+        <p class="settings-description">
+          Yumi Manager — sistema demonstrativo desenvolvido pelo Studio Yumi.
+          Versão 2.0.
+        </p>
       </div>
 
     </section>
 
     <footer>
-      © 2026 Studio Yumi — Sistema demonstrativo de gerenciamento.
+      © 2026 Studio Yumi — Design Digital & Tecnologia.
     </footer>
 
   </main>
 </div>
 
+<!-- MODAL DE CLIENTES -->
 <div class="modal" id="modal">
   <div class="modal-content">
 
@@ -526,23 +435,24 @@ footer {
 
       <div class="field">
         <label for="nome">Nome completo</label>
-        <input id="nome" required placeholder="Digite o nome">
+        <input id="nome" required maxlength="100" placeholder="Digite o nome">
       </div>
 
       <div class="field">
         <label for="email">E-mail</label>
-        <input id="email" type="email" required placeholder="email@exemplo.com">
+        <input id="email" type="email" required maxlength="120" placeholder="email@exemplo.com">
       </div>
 
       <div class="field">
         <label for="telefone">Telefone</label>
-        <input id="telefone" placeholder="(00) 00000-0000">
+        <input id="telefone" maxlength="25" placeholder="(00) 00000-0000">
       </div>
 
       <div class="modal-buttons">
         <button type="button" class="btn btn-secondary" onclick="fecharModal()">
           Cancelar
         </button>
+
         <button type="submit" class="btn btn-primary">
           Salvar cliente
         </button>
@@ -553,27 +463,94 @@ footer {
 </div>
 
 <script>
-let clientes = JSON.parse(
-  localStorage.getItem("yumiClientes")
-) || [];
+const CHAVE_CLIENTES = "yumiManagerClientesV2";
+const CHAVE_CONFIG = "yumiManagerConfigV2";
 
+let clientes = carregarClientes();
 let editando = null;
 
-function salvarDados() {
-  localStorage.setItem("yumiClientes", JSON.stringify(clientes));
+let configuracoes = carregarConfiguracoes();
+
+function carregarClientes() {
+  try {
+    const dados = JSON.parse(localStorage.getItem(CHAVE_CLIENTES));
+    return Array.isArray(dados) ? dados : [];
+  } catch {
+    return [];
+  }
 }
 
-function renderizar() {
+function carregarConfiguracoes() {
+  try {
+    const dados = JSON.parse(localStorage.getItem(CHAVE_CONFIG));
+    return {
+      empresa: dados?.empresa || "Studio Yumi",
+      descricao: dados?.descricao || "Design Digital & Tecnologia"
+    };
+  } catch {
+    return {
+      empresa: "Studio Yumi",
+      descricao: "Design Digital & Tecnologia"
+    };
+  }
+}
+
+function salvarDados() {
+  localStorage.setItem(CHAVE_CLIENTES, JSON.stringify(clientes));
+}
+
+function navegar(pagina) {
+  document.querySelectorAll(".page").forEach(item => {
+    item.classList.remove("active");
+  });
+
+  document.querySelectorAll(".nav-item").forEach(item => {
+    item.classList.toggle("active", item.dataset.page === pagina);
+  });
+
+  document.getElementById(pagina).classList.add("active");
+
+  const titulos = {
+    dashboard: ["Visão geral", "Acompanhe as informações da sua empresa."],
+    clientes: ["Clientes", "Gerencie os cadastros da sua empresa."],
+    configuracoes: ["Configurações", "Personalize e gerencie seu sistema."]
+  };
+
+  document.getElementById("tituloPagina").textContent = titulos[pagina][0];
+  document.getElementById("subtituloPagina").textContent = titulos[pagina][1];
+
+  if (pagina === "clientes") renderizarClientes();
+  if (pagina === "dashboard") atualizarDashboard();
+  if (pagina === "configuracoes") carregarCamposConfiguracao();
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function atualizarDashboard() {
+  document.getElementById("totalDashboard").textContent = clientes.length;
+  document.getElementById("ativosDashboard").textContent = clientes.length;
+  document.getElementById("novosDashboard").textContent = clientes.length;
+  document.getElementById("boasVindas").textContent =
+    "Bem-vindo ao " + configuracoes.empresa;
+}
+
+function escapar(valor) {
+  return String(valor).replace(/[&<>"']/g, caractere => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  })[caractere]);
+}
+
+function renderizarClientes() {
   const termo = document.getElementById("pesquisa").value.toLowerCase();
 
   const filtrados = clientes.filter(cliente =>
     cliente.nome.toLowerCase().includes(termo) ||
     cliente.email.toLowerCase().includes(termo)
   );
-
-  document.getElementById("total").textContent = clientes.length;
-  document.getElementById("ativos").textContent = clientes.length;
-  document.getElementById("novos").textContent = clientes.length;
 
   const lista = document.getElementById("lista");
 
@@ -596,22 +573,12 @@ function renderizar() {
       <td><span class="status">Ativo</span></td>
       <td>
         <div class="row-actions">
-          <button onclick="editarCliente('${cliente.id}')">Editar</button>
-          <button onclick="excluirCliente('${cliente.id}')">Excluir</button>
+          <button onclick="editarCliente('${escapar(cliente.id)}')">Editar</button>
+          <button onclick="excluirCliente('${escapar(cliente.id)}')">Excluir</button>
         </div>
       </td>
     </tr>
   `).join("");
-}
-
-function escapar(valor) {
-  return String(valor).replace(/[&<>"']/g, caractere => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  })[caractere]);
 }
 
 function abrirModal() {
@@ -636,6 +603,7 @@ document.getElementById("formulario").addEventListener("submit", function(event)
 
   if (editando) {
     const cliente = clientes.find(item => item.id === editando);
+
     if (cliente) {
       cliente.nome = nome;
       cliente.email = email;
@@ -643,7 +611,7 @@ document.getElementById("formulario").addEventListener("submit", function(event)
     }
   } else {
     clientes.push({
-      id: String(Date.now()) + Math.random().toString(16).slice(2),
+      id: Date.now().toString() + Math.random().toString(16).slice(2),
       nome,
       email,
       telefone
@@ -651,7 +619,8 @@ document.getElementById("formulario").addEventListener("submit", function(event)
   }
 
   salvarDados();
-  renderizar();
+  renderizarClientes();
+  atualizarDashboard();
   fecharModal();
 });
 
@@ -670,13 +639,13 @@ function editarCliente(id) {
 }
 
 function excluirCliente(id) {
-  const confirmar = confirm("Deseja realmente excluir este cliente?");
-  if (!confirmar) return;
+  if (!confirm("Deseja realmente excluir este cliente?")) return;
 
   clientes = clientes.filter(cliente => cliente.id !== id);
 
   salvarDados();
-  renderizar();
+  renderizarClientes();
+  atualizarDashboard();
 }
 
 function exportarCSV() {
@@ -686,7 +655,7 @@ function exportarCSV() {
   }
 
   const linhas = [
-    ["Nome", "Email", "Telefone"],
+    ["Nome","Email","Telefone"],
     ...clientes.map(cliente => [
       cliente.nome,
       cliente.email,
@@ -696,14 +665,11 @@ function exportarCSV() {
 
   const csv = "\uFEFF" + linhas.map(linha =>
     linha.map(valor =>
-      '"' + String(valor).replace(/"/g, '""') + '"'
+      '"' + String(valor).replace(/"/g,'""') + '"'
     ).join(";")
   ).join("\n");
 
-  const arquivo = new Blob([csv], {
-    type: "text/csv;charset=utf-8;"
-  });
-
+  const arquivo = new Blob([csv], {type:"text/csv;charset=utf-8;"});
   const url = URL.createObjectURL(arquivo);
   const link = document.createElement("a");
 
@@ -714,7 +680,52 @@ function exportarCSV() {
   URL.revokeObjectURL(url);
 }
 
-renderizar();
+function carregarCamposConfiguracao() {
+  document.getElementById("empresa").value = configuracoes.empresa;
+  document.getElementById("descricaoEmpresa").value = configuracoes.descricao;
+}
+
+function salvarConfiguracoes() {
+  const empresa = document.getElementById("empresa").value.trim();
+  const descricao = document.getElementById("descricaoEmpresa").value.trim();
+
+  if (!empresa) {
+    alert("Digite o nome da empresa.");
+    return;
+  }
+
+  configuracoes = {empresa,descricao};
+
+  localStorage.setItem(CHAVE_CONFIG, JSON.stringify(configuracoes));
+
+  atualizarDashboard();
+
+  alert("Configurações salvas com sucesso!");
+}
+
+function limparDados() {
+  const confirmar = confirm(
+    "Tem certeza? Todos os clientes e configurações salvos neste navegador serão apagados."
+  );
+
+  if (!confirmar) return;
+
+  clientes = [];
+  configuracoes = {
+    empresa:"Studio Yumi",
+    descricao:"Design Digital & Tecnologia"
+  };
+
+  localStorage.removeItem(CHAVE_CLIENTES);
+  localStorage.removeItem(CHAVE_CONFIG);
+
+  atualizarDashboard();
+  carregarCamposConfiguracao();
+
+  alert("Dados locais restaurados.");
+}
+
+atualizarDashboard();
 </script>
 
 </body>
